@@ -1,0 +1,129 @@
+# Stable Diffusion WebUI Cleanup Configuration
+# Edit this file to customize what gets cleaned during startup
+
+# ===========================================
+# BASIC CLEANUP SETTINGS
+# ===========================================
+
+# Clean Python cache files (__pycache__, *.pyc)
+CLEAN_PYTHON_CACHE=true
+
+# Clean temporary files (tmp/ directory)
+CLEAN_TEMP_FILES=true
+
+# Clean Gradio temporary files
+CLEAN_GRADIO_TEMP=true
+
+# Clean old log files (older than specified days)
+CLEAN_OLD_LOGS=true
+LOG_RETENTION_DAYS=7
+
+# ===========================================
+# OUTPUT DIRECTORY SETTINGS
+# ===========================================
+
+# Automatically clean output directories (generated images)
+# WARNING: This will delete your generated artwork!
+AUTO_CLEAN_OUTPUTS=false
+
+# Prompt user before cleaning outputs (if AUTO_CLEAN_OUTPUTS=false)
+PROMPT_FOR_OUTPUT_CLEANUP=true
+
+# Specific output directories to clean (comma-separated)
+OUTPUT_DIRS="outputs,log\images"
+
+# ===========================================
+# EXTENSION SETTINGS
+# ===========================================
+
+# Clean extension cache files
+CLEAN_EXTENSION_CACHE=true
+
+# Clean extension git logs (preserves repositories)
+CLEAN_EXTENSION_GIT_LOGS=true
+
+# Clean CivitAI extension temp files
+CLEAN_CIVITAI_TEMP=true
+
+# Clean Aria2 download temp files (from CivitAI extension)
+CLEAN_ARIA2_TEMP=true
+
+# ===========================================
+# UI CACHE SETTINGS
+# ===========================================
+
+# Clean JavaScript/CSS map files
+CLEAN_UI_CACHE=true
+
+# Clean browser cache files
+CLEAN_BROWSER_CACHE=true
+
+# ===========================================
+# PRESERVED ITEMS (DO NOT CHANGE)
+# ===========================================
+# These items are automatically preserved for performance:
+# - cache/hashes/ (model file hashes)
+# - cache/safetensors-metadata/ (model metadata)  
+# - repositories/ (git repositories)
+# - venv/ (Python virtual environment)
+# - Extension configurations and settings
+# - Model files and checkpoints
+# - config_states/civitai_subfolders.json (CivitAI configuration)
+# - Extension user settings and configurations
+
+# ===========================================
+# ADVANCED SETTINGS
+# ===========================================
+
+# Exit cleanup (clean temp files when WebUI closes)
+CLEAN_ON_EXIT=true
+
+# Silent mode (no prompts, use config settings)
+SILENT_MODE=false
+
+# Force cleanup (ignore confirmations)
+FORCE_CLEANUP=false
+
+# Show detailed cleanup progress
+SHOW_PROGRESS=true
+
+# ===========================================
+# CUSTOM CLEANUP PATTERNS
+# ===========================================
+# Add custom file patterns to clean (one per line)
+# Use PowerShell wildcard syntax: *.tmp, temp_*, etc.
+# Lines starting with # are ignored
+
+CUSTOM_CLEANUP_PATTERNS="
+*.tmp
+*.temp
+*.bak
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+*.aria2
+*.part
+extensions/*/aria2/logs/*
+"
+
+# ===========================================
+# EXCLUDED PATTERNS  
+# ===========================================
+# Files/directories to NEVER clean (safety net)
+# Use PowerShell wildcard syntax
+
+EXCLUSION_PATTERNS="
+models/*
+embeddings/*
+*.ckpt
+*.safetensors
+*.pt
+*.bin
+config.json
+ui-config.json
+webui-user.*
+config_states/*.json
+extensions/*/settings.json
+extensions/*/config.json
+"
