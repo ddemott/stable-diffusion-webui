@@ -1,5 +1,7 @@
-# Stable Diffusion web UI
+# Stable Diffusion web UI (Enhanced Fork)
 A web interface for Stable Diffusion, implemented using Gradio library.
+
+> **🚀 Enhanced Fork Features:** This repository includes comprehensive cleanup scripts and maintenance tools for optimal WebUI performance. See the [Cleanup Scripts](#cleanup-scripts-enhanced-fork-features) section below for details.
 
 ![](screenshot.png)
 
@@ -113,8 +115,10 @@ Alternatively, use online services (like Google Colab):
 ### Automatic Installation on Windows
 1. Install [Python 3.10.6](https://www.python.org/downloads/release/python-3106/) (Newer version of Python does not support torch), checking "Add Python to PATH".
 2. Install [git](https://git-scm.com/download/win).
-3. Download the stable-diffusion-webui repository, for example by running `git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git`.
+3. Download the stable-diffusion-webui repository, for example by running `git clone https://github.com/ddemott/stable-diffusion-webui.git`.
 4. Run `webui-user.bat` from Windows Explorer as normal, non-administrator, user.
+
+**Enhanced Fork Features:** This repository includes additional cleanup scripts for better maintenance. After installation, you can use `start-clean.ps1` for optimized startup with automatic cleanup.
 
 ### Automatic Installation on Linux
 1. Install the dependencies:
@@ -147,11 +151,11 @@ python_cmd="python3.11"
 ```
 2. Navigate to the directory you would like the webui to be installed and execute the following command:
 ```bash
-wget -q https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
+wget -q https://raw.githubusercontent.com/ddemott/stable-diffusion-webui/master/webui.sh
 ```
 Or just clone the repo wherever you want:
 ```bash
-git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui
+git clone https://github.com/ddemott/stable-diffusion-webui
 ```
 
 3. Run `webui.sh`.
@@ -159,6 +163,129 @@ git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui
 ### Installation on Apple Silicon
 
 Find the instructions [here](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Installation-on-Apple-Silicon).
+
+## Cleanup Scripts (Enhanced Fork Features)
+
+This fork includes comprehensive cleanup scripts to maintain optimal performance and manage temporary files. These scripts safely clean accumulated cache and temporary files while preserving important data that speeds up the WebUI.
+
+### 🧹 Available Cleanup Scripts
+
+#### **`start-clean.ps1`** - *Recommended*
+The most advanced and configurable cleanup script with full customization support.
+
+**Features:**
+- Configuration-driven cleanup via `cleanup-config.txt`
+- CivitAI extension support with Aria2 download manager cleanup
+- Smart preservation of performance-critical caches
+- Detailed progress reporting and space freed tracking
+- Extension-aware cleanup for Python cache, temp files, and logs
+
+**Usage:**
+```powershell
+.\start-clean.ps1                    # Interactive cleanup with configuration
+.\start-clean.ps1 -ConfigPath custom-config.txt  # Use custom config file
+```
+
+#### **`cleanup-and-start.bat`** - *Simple*
+Basic Windows batch script for quick cleanup and startup.
+
+**Usage:**
+```batch
+cleanup-and-start.bat
+```
+
+#### **`cleanup-and-start.ps1`** - *Advanced*
+PowerShell script with command-line parameters for automation.
+
+**Usage:**
+```powershell
+.\cleanup-and-start.ps1 -Silent            # Silent cleanup
+.\cleanup-and-start.ps1 -CleanOutputs      # Include output directory cleanup
+.\cleanup-and-start.ps1 -Force -Silent     # Force all cleanups without prompts
+```
+
+#### **`check-civitai.ps1`** - *Analysis*
+Analyzes your CivitAI extension status and provides cleanup recommendations.
+
+**Usage:**
+```powershell
+.\check-civitai.ps1
+```
+
+### 🛠️ Configuration
+
+Edit `cleanup-config.txt` to customize cleanup behavior:
+
+```ini
+# Basic cleanup settings
+CLEAN_PYTHON_CACHE=true
+CLEAN_TEMP_FILES=true
+CLEAN_GRADIO_TEMP=true
+
+# CivitAI extension support
+CLEAN_CIVITAI_TEMP=true
+CLEAN_ARIA2_TEMP=true
+
+# Output directories (your generated images)
+AUTO_CLEAN_OUTPUTS=false  # Set to true for automatic cleanup
+PROMPT_FOR_OUTPUT_CLEANUP=true
+
+# Custom patterns and exclusions
+CUSTOM_CLEANUP_PATTERNS="*.tmp,*.aria2,*.part"
+EXCLUSION_PATTERNS="models/*,*.safetensors,config.json"
+```
+
+### 🚀 What Gets Cleaned vs. Preserved
+
+**✅ Safe to Clean (Performance Impact: Minimal)**
+- Python cache files (`__pycache__/`, `*.pyc`)
+- Temporary build files (`tmp/`)
+- Gradio UI temporary files
+- Extension cache files
+- Aria2 download logs and temp files (from CivitAI extension)
+- Old log files (older than 7 days)
+- JavaScript/CSS map files
+
+**🛡️ Preserved (Performance Impact: High)**
+- `cache/hashes/` - Model file hashes (prevents model rescanning)
+- `cache/safetensors-metadata/` - Model metadata cache
+- `repositories/` - Git repositories for dependencies
+- `venv/` - Python virtual environment
+- Extension configurations and settings
+- `config_states/civitai_subfolders.json` - CivitAI folder settings
+- All model files (`.ckpt`, `.safetensors`, `.pt`, `.bin`)
+
+**⚠️ Optional Cleanup (User Choice)**
+- Generated images in output directories
+- Extension-specific cache files
+
+### 💡 Why Use These Scripts?
+
+1. **Faster Startup** - Removes accumulated temporary files that slow down loading
+2. **Disk Space Recovery** - Cleans up gigabytes of unnecessary cache and temp files
+3. **Extension Support** - Specifically handles CivitAI extension and Aria2 downloads
+4. **Safe Operation** - Preserves all performance-critical caches and your generated content
+5. **Automation Ready** - Scripts can be configured for silent operation
+
+### 🎯 Recommended Workflow
+
+1. **First time setup:**
+   ```powershell
+   .\check-civitai.ps1     # Analyze current state
+   ```
+
+2. **Regular maintenance:**
+   ```powershell
+   .\start-clean.ps1       # Interactive cleanup and startup
+   ```
+
+3. **Automated/silent operation:**
+   ```powershell
+   # Edit cleanup-config.txt first, then:
+   .\start-clean.ps1       # Uses your saved configuration
+   ```
+
+These cleanup scripts are designed to work seamlessly with all WebUI features while maintaining optimal performance. They're particularly beneficial for users with CivitAI extension or those who generate many images.
 
 ## Contributing
 Here's how to add code to this repo: [Contributing](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Contributing)
