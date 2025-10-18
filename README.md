@@ -1,7 +1,7 @@
 # Stable Diffusion web UI (Enhanced Fork)
 A web interface for Stable Diffusion, implemented using Gradio library.
 
-> **🚀 Enhanced Fork Features:** This repository includes comprehensive cleanup scripts and maintenance tools for optimal WebUI performance. See the [Cleanup Scripts](#cleanup-scripts-enhanced-fork-features) section below for details.
+> **🚀 Enhanced Fork Features:** This repository includes comprehensive cleanup scripts, maintenance tools, and UI enhancements for optimal WebUI performance. Features include CivitAI Browser model type tooltips and advanced cleanup automation. See the [Cleanup Scripts](#cleanup-scripts-enhanced-fork-features) and [UI Enhancements](#ui-enhancements-enhanced-fork-features) sections below for details.
 
 ![](screenshot.png)
 
@@ -73,6 +73,7 @@ A web interface for Stable Diffusion, implemented using Gradio library.
 - DeepDanbooru integration, creates danbooru style tags for anime prompts
 - [xformers](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Xformers), major speed increase for select cards: (add `--xformers` to commandline args)
 - via extension: [History tab](https://github.com/yfszzx/stable-diffusion-webui-images-browser): view, direct and delete images conveniently within the UI
+- **Enhanced CivitAI Browser** (Enhanced Fork): model type tooltips display when hovering over model cards for quick identification
 - Generate forever option
 - Training tab
      - hypernetworks and embeddings options
@@ -163,6 +164,47 @@ git clone https://github.com/ddemott/stable-diffusion-webui
 ### Installation on Apple Silicon
 
 Find the instructions [here](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Installation-on-Apple-Silicon).
+
+## UI Enhancements (Enhanced Fork Features)
+
+This fork includes several user interface improvements to enhance the WebUI experience:
+
+### 🎯 CivitAI Browser Plus Enhancements
+
+#### **Model Type Tooltips**
+Enhanced the CivitAI Browser Plus extension with intuitive model type tooltips.
+
+**Features:**
+- **Hover tooltips** show model type (Checkpoint, LoRA, TextualInversion, etc.) when hovering over model cards
+- **Automatic detection** works with all CivitAI model types
+- **Clean styling** with smooth fade animations and non-intrusive design
+- **Dynamic updates** tooltips appear automatically as new models load
+
+**Usage:**
+1. Navigate to the CivitAI Browser tab
+2. Browse any model category (Checkpoints, LoRAs, etc.)
+3. Hover over any model image to see its type displayed
+
+**Supported Model Types:**
+- Checkpoint
+- LORA
+- LoCon
+- DoRA
+- TextualInversion
+- Hypernetwork
+- VAE
+- ControlNet
+- Upscaler
+- AestheticGradient
+- MotionModule
+- Workflows
+- Other
+
+**Technical Details:**
+- Tooltips are added dynamically to all model cards
+- Automatic content monitoring detects when new models load
+- Lightweight implementation with minimal performance impact
+- Compatible with all CivitAI Browser Plus features
 
 ## Cleanup Scripts (Enhanced Fork Features)
 
